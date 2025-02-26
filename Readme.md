@@ -31,7 +31,7 @@ Para ejecutar este proyecto, necesitas:
 
 ### 1️⃣ Clona este repositorio:
 ```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
+git clone https://github.com/DemianM21/Neuronal_networks_keras_DemianMundo.git
 cd tu-repositorio
 ```
 
@@ -109,5 +109,5 @@ Al ejecutar el programa, verás:
 ---
 
 📌 **Autor:** *Demian Mundo*  
-📌 **Repositorio:** [GitHub](https://github.com/tu-usuario/tu-repositorio)
+📌 **Repositorio:** [GitHub](https://github.com/DemianM21/Neuronal_networks_keras_DemianMundo.git)
 
