@@ -117,6 +117,117 @@ El conjunto de datos **MNIST** contiene imágenes de dígitos escritos a mano (0
 - Una imagen de ejemplo del conjunto de entrenamiento.
 
 ---
+# Entrenamiento de una Red Neuronal en MNIST
+
+El codigo que el proyecto implementa para construir una red neuronal en keras/Tenserflow para clasificar imagenes del dataset MNIST, es el siguiente:
+
+## 1. Importación de Librerías
+Se importan las librerías necesarias para manipular datos, visualizar imágenes y construir la red neuronal.
+
+```python
+import numpy as np 
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from keras.models import Sequential  # type: ignore
+from keras.layers import Dense, Input  # type: ignore
+from keras.utils import to_categorical  # type: ignore
+from keras.datasets import mnist  # type: ignore
+```
+
+## 2. Definición de la Función Principal
+Se define la función `entrenar_red_neuronal()` que entrena y evalúa la red neuronal.
+
+```python
+def entrenar_red_neuronal():
+    """
+    Entrena una red neuronal para clasificar imágenes del dataset MNIST.
+    """
+```
+
+## 3. Carga de Datos
+Se carga el dataset MNIST, dividiéndolo en datos de entrenamiento y prueba.
+
+```python
+    (train_data_x, train_labels_y), (test_data_x, test_labels_y) = mnist.load_data()
+```
+
+## 4. Información y Visualización de Datos
+Se muestran detalles del conjunto de datos y un ejemplo de imagen de entrenamiento.
+
+```python
+    print("Forma de los datos de entrenamiento:", train_data_x.shape)
+    print("Etiqueta del primer ejemplo de entrenamiento:", train_labels_y[1])
+    print("Forma de los datos de prueba:", test_data_x.shape)
+    
+    plt.imshow(train_data_x[1])
+    plt.title("Ejemplo de imagen de entrenamiento")
+    plt.show()
+```
+
+## 5. Definición de la Arquitectura del Modelo
+Se crea un modelo secuencial con una capa de entrada, una capa oculta con 512 neuronas y una capa de salida con 10 neuronas.
+
+```python
+    model = Sequential([
+        Input(shape=(28 * 28,)),  # Capa de entrada con 784 nodos (28x28 píxeles aplanados)
+        Dense(512, activation='relu'),  # Capa oculta con 512 neuronas y activación ReLU
+        Dense(10, activation='softmax')  # Capa de salida con 10 neuronas (una por cada clase)
+    ])
+```
+
+## 6. Compilación del Modelo
+Se configura el modelo con la función de pérdida `categorical_crossentropy`, el optimizador `rmsprop` y la métrica de precisión.
+
+```python
+    model.compile(
+        optimizer='rmsprop',
+        loss='categorical_crossentropy',  # Función de pérdida
+        metrics=['accuracy']
+    )
+    
+    print("Resumen del modelo:")
+    model.summary()
+```
+
+## 7. Preprocesamiento de Datos
+Se normalizan las imágenes y se convierten las etiquetas a formato one-hot.
+
+```python
+    x_train = train_data_x.reshape(60000, 28 * 28)
+    x_train = x_train.astype('float32') / 255
+    y_train = to_categorical(train_labels_y)
+    
+    x_test = test_data_x.reshape(10000, 28 * 28)
+    x_test = x_test.astype('float32') / 255
+    y_test = to_categorical(test_labels_y)
+```
+
+## 8. Entrenamiento del Modelo
+El modelo se entrena con 10 épocas y un tamaño de lote de 128.
+
+```python
+    print("Entrenando la red neuronal...")
+    model.fit(x_train, y_train, epochs=10, batch_size=128)
+```
+
+## 9. Evaluación del Modelo
+Se mide la pérdida y precisión del modelo en los datos de prueba.
+
+```python
+    print("Evaluando la red neuronal...")
+    loss, accuracy = model.evaluate(x_test, y_test)
+    print(f"Pérdida: {loss}, Precisión: {accuracy}")
+```
+
+## 10. Visualización
+Se muestra la imagen de ejemplo y gráficos adicionales si fueran generados.
+
+```python
+    plt.show()
+```
+
+
+---
 
 ## 📢 Contacto y Créditos
 📌 **Autor:** *Demian Mundo*  
